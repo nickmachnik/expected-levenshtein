@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import numpy as np
-from numba import jit
+from numba import njit
 
 
-@jit(nopython=True, parallel=True)
-def _lev(a, b):
+@njit
+def _lev_jit(a, b):
     """Computes Levenshtein distance between the two
     strings a and b.
 
@@ -35,7 +35,8 @@ def _lev(a, b):
     return L
 
 
-def _rand_seq(l, alphabet):
+@njit
+def _rand_seq_jit(l, alphabet):
     """Generates a random sequence.
 
     Args:
@@ -48,22 +49,40 @@ def _rand_seq(l, alphabet):
     return np.random.choice(alphabet, l)
 
 
-def _sample_rand_lev(n, reps, alphabet):
+@njit(parallel=True)
+def _sample_rand_lev_jit(n, n_samples, alphabet):
     """Samples Levenshtein distances between random sequences.
-    Generates <rep> <n> x <n> matrices of the Levenshtein distance
+    Generates <rep> <n + 1> x <n + 1> matrices of the Levenshtein distance
     calculations between random sequences built over the provided
     alphabet. Returns the element wise mean over the matrices.
 
     Args:
         n (int): Length of the sequence
-        reps (int): number of replicates
+        n_samples (int): number of replicates
         alphabet (array_like): alphabet over which
                                the random sequences are built
 
     Returns:
-        array_like: (n + 1)^2 matrix with the element wise means over all reps.
+        array_like: <n_samples> x (n + 1)^2 array containing all n_samples
     """
-    sample = [
-        _lev(_rand_seq(n, alphabet), _rand_seq(n, alphabet))
-        for _ in range(reps)]
-    return np.mean(np.array(sample), axis=0)
+    samples = np.empty(shape=(n_samples, n + 1, n + 1))
+    for i in np.arange(n_samples):
+        samples[i] = _lev_jit(
+            _rand_seq_jit(n, alphabet), _rand_seq_jit(n, alphabet))
+    return samples
+
+
+def random_average_levenshtein(n, n_samples, alphabet):
+    """Compute average levenshtein distances
+    of random strings of lengths 1 ≤ length ≤ n
+    over <n_samples> samples.
+
+    Args:
+        n (int): maximal string length
+        n_samples (int): number of samples to generate
+        alphabet (array_like): np.array of the alphabet symbols
+
+    Returns:
+        array_like: 2D array with the average distances up to length n
+    """
+    return np.mean(_sample_rand_lev_jit(n, n_samples, alphabet), axis=0)
