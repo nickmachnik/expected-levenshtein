@@ -52,26 +52,6 @@ def _rand_seq_jit(l, alphabet):
 
 
 @njit
-def _sample_rand_lev_jit(n, n_samples, alphabet):
-    """Samples Levenshtein distances between random sequences.
-    Generates <rep> <n + 1> x <n + 1> matrices of the Levenshtein distance
-    calculations between random sequences built over the provided
-    alphabet. Returns the element wise mean over the matrices.
-
-    Args:
-        n (int): Length of the sequence
-        n_samples (int): number of replicates
-        alphabet (array_like): alphabet over which
-                               the random sequences are built
-
-    Returns:
-        array_like: <n_samples> x (n + 1)^2 array containing all n_samples
-    """
-    for i in np.arange(n_samples):
-        yield _lev_jit(_rand_seq_jit(n, alphabet), _rand_seq_jit(n, alphabet))
-
-
-@njit
 def random_average_levenshtein(n, n_samples, alphabet):
     """Compute average levenshtein distances
     of random strings of lengths 1 ≤ length ≤ n
@@ -85,9 +65,9 @@ def random_average_levenshtein(n, n_samples, alphabet):
     Returns:
         array_like: 2D array with the average distances up to length n
     """
-    samples = _sample_rand_lev_jit(n, n_samples, alphabet)
-    u = next(samples)
-    for i, sample in enumerate(samples):
-        n = i + 2
-        u = (n - 1) / n * u + (sample / n)
+    u = _lev_jit(_rand_seq_jit(n, alphabet), _rand_seq_jit(n, alphabet))
+    for i in np.arange(2, n_samples + 1):
+        sample = _lev_jit(
+            _rand_seq_jit(n, alphabet), _rand_seq_jit(n, alphabet))
+        u = (i - 1) / i * u + (sample / i)
     return u
