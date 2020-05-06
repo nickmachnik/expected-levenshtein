@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+"""
+"""
 
 import numpy as np
 from numba import njit
@@ -49,7 +51,7 @@ def _rand_seq_jit(l, alphabet):
     return np.random.choice(alphabet, l)
 
 
-@njit(parallel=True)
+@njit
 def _sample_rand_lev_jit(n, n_samples, alphabet):
     """Samples Levenshtein distances between random sequences.
     Generates <rep> <n + 1> x <n + 1> matrices of the Levenshtein distance
@@ -65,13 +67,11 @@ def _sample_rand_lev_jit(n, n_samples, alphabet):
     Returns:
         array_like: <n_samples> x (n + 1)^2 array containing all n_samples
     """
-    samples = np.empty(shape=(n_samples, n + 1, n + 1))
     for i in np.arange(n_samples):
-        samples[i] = _lev_jit(
-            _rand_seq_jit(n, alphabet), _rand_seq_jit(n, alphabet))
-    return samples
+        yield _lev_jit(_rand_seq_jit(n, alphabet), _rand_seq_jit(n, alphabet))
 
 
+@njit
 def random_average_levenshtein(n, n_samples, alphabet):
     """Compute average levenshtein distances
     of random strings of lengths 1 ≤ length ≤ n
@@ -85,4 +85,9 @@ def random_average_levenshtein(n, n_samples, alphabet):
     Returns:
         array_like: 2D array with the average distances up to length n
     """
-    return np.mean(_sample_rand_lev_jit(n, n_samples, alphabet), axis=0)
+    samples = _sample_rand_lev_jit(n, n_samples, alphabet)
+    u = next(samples)
+    for i, sample in enumerate(samples):
+        n = i + 2
+        u = (n - 1) / n * u + (sample / n)
+    return u
