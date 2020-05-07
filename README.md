@@ -11,7 +11,7 @@ To use the code, you will need `numpy` and `numba`.
 Simply clone this repo:
 
 ```
-git clone
+git clone https://github.com/nickmachnik/expected-levenshtein.git
 ```
 
 ## Compute average levenshtein distances
@@ -19,7 +19,7 @@ git clone
 To compute the approximate expected Levenshtein distances of random strings of lengths 1 ≤ lengths ≤ n, use `random_average_levenshtein` in `sample.py`.
 
 This example shows how to compute the distances of random strings up to length 100 over a 4-letter alphabet, averaged over 1000 replicates.
-```
+```python
 from sampling import random_average_levenshtein
 import numpy as np
 
@@ -28,7 +28,7 @@ random_average_levenshtein(100, 1000, np.arange(4))
 
 ## License
 
-MIT license ([LICENSE-MIT](LICENSE-MIT) or https://opensource.org/licenses/MIT)
+MIT license ([LICENSE](LICENSE.txt) or https://opensource.org/licenses/MIT)
 
 <!-- 
 End with an example of getting some data out of the system or using it for a little demo
