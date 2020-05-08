@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 """
+This module contains functions for the approximate calculation
+of expected levenshtein distances between random strings of
+various lengths, over alphabets of different sizes.
+
+The expected distances are approximated by averages
+over many replicates.
 """
 
 import numpy as np
