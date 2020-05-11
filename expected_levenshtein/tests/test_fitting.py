@@ -10,7 +10,6 @@ class TestFitting(unittest.TestCase):
     def test_sample(self):
         av_l = sample.random_average_levenshtein(25, 1000, np.arange(2))
         coeffs, mses = fit.model_average_levenshtein(av_l)
-        print(coeffs, mses)
         self.assertEqual(len(coeffs[0]), 6)
 
 
