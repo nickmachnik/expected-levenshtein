@@ -16,7 +16,7 @@ def main():
 
     # write file
     with open('./example_models.json', 'w') as fout:
-        json.dump([rows, coeff, mse], fout)
+        json.dump([rows.tolist(), coeff.tolist(), mse.tolist()], fout)
 
 
 if __name__ == '__main__':
