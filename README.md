@@ -47,7 +47,7 @@ import numpy as np
 average_distances = random_average_levenshtein(50, 1000, np.arange(4))
 
 # make models
-coefficients, mean_squared_deviations = model_average_levenshtein(
+row_indices, coefficients, mean_squared_deviations = model_average_levenshtein(
     average_distances, model_rows=np.arange(25, 51))
 
 # predict expected distance for n=50, m=44
