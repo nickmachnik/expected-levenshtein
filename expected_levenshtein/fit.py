@@ -68,6 +68,7 @@ def model_average_levenshtein(sampled_levenshtein, model_rows='all', deg=5):
         deg (int, optional): Degree of the polynomials that will be fitted.
 
     Returns:
+        array_like: row indices for which models were computed
         array_like: coefficients of the fitted polynomials
         array_like: mean squared deviations between values predicted by the
                     models and the input data.
@@ -93,4 +94,4 @@ def model_average_levenshtein(sampled_levenshtein, model_rows='all', deg=5):
         c, m = _fit_poly(sampled_levenshtein[row, :row+1])
         coeffs[i] = c
         mses[i] = m
-    return coeffs, mses
+    return model_rows, coeffs, mses
