@@ -14,16 +14,45 @@ Simply clone this repo:
 git clone https://github.com/nickmachnik/expected-levenshtein.git
 ```
 
-## Compute average levenshtein distances
+## Get started
+
+### Compute average levenshtein distances
 
 To compute the approximate expected Levenshtein distances of random strings of lengths 1 ≤ lengths ≤ n, use `random_average_levenshtein` in `sample.py`.
 
 This example shows how to compute the distances of random strings up to length 100 over a 4-letter alphabet, averaged over 1000 replicates.
 ```python
-from sampling import random_average_levenshtein
+from sample import random_average_levenshtein
 import numpy as np
 
 random_average_levenshtein(100, 1000, np.arange(4))
+```
+
+### Generate models for expected distances
+
+For long sequences, the distance matrix returned by `random_average_levenshtein` can get quite large.
+If you prefer not to load and query a large matrix object every time you need an expected distance,
+`fit.model_average_levenshtein` generates a polynomial model for each row in
+the distance matrix. That way, the information that needs to be stored to compute approximate
+expected levenshtein distances is reduced to the coefficients of the polynomials. Once computed,
+these can be used to predict expected distances with `fit.poly`.
+
+This example shows how to generate and use such models for random strings from length 25 to length 50.
+```python
+from sample import random_average_levenshtein
+from fit import poly, model_average_levenshtein
+import numpy as np
+
+# sample distances
+average_distances = random_average_levenshtein(50, 1000, np.arange(4))
+
+# make models
+coefficients, mean_squared_deviations = model_average_levenshtein(
+    average_distances, model_rows=np.arange(25, 51))
+
+# predict expected distance for n=50, m=44
+coeff_n_50 = coefficients[-1]
+predicted_expected_distance = poly(44, coeff_n_50)
 ```
 
 ## License
