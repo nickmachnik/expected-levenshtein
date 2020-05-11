@@ -14,9 +14,9 @@ Simply clone this repo:
 git clone https://github.com/nickmachnik/expected-levenshtein.git
 ```
 
-## Get started
+## Geting started
 
-### Compute average levenshtein distances
+### Computing average levenshtein distances
 
 To compute the approximate expected Levenshtein distances of random strings of lengths 1 ≤ lengths ≤ n, use `random_average_levenshtein` in `sample.py`.
 
@@ -28,7 +28,7 @@ import numpy as np
 random_average_levenshtein(100, 1000, np.arange(4))
 ```
 
-### Generate models for expected distances
+### Generating models for expected distances
 
 For long sequences, the distance matrix returned by `random_average_levenshtein` can get quite large.
 If you prefer not to load and query a large matrix object every time you need an expected distance,
