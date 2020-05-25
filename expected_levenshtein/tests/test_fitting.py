@@ -2,14 +2,14 @@
 
 import unittest
 import numpy as np
-import sample
-import fit
+import expected_levenshtein.sample as sample
+import expected_levenshtein.fit as fit
 
 
 class TestFitting(unittest.TestCase):
     def test_sample(self):
         av_l = sample.random_average_levenshtein(25, 1000, np.arange(2))
-        coeffs, mses = fit.model_average_levenshtein(av_l)
+        model_rows, coeffs, mses = fit.model_average_levenshtein(av_l)
         self.assertEqual(len(coeffs[0]), 6)
 
 

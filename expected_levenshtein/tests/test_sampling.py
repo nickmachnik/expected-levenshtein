@@ -2,7 +2,7 @@
 
 import unittest
 import numpy as np
-import sample
+import expected_levenshtein.sample as sample
 
 
 class TestLevenshteinSamplingFunctions(unittest.TestCase):
