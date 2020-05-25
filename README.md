@@ -1,4 +1,5 @@
 # expected-levenshtein
+![Python application](https://github.com/nickmachnik/expected-levenshtein/workflows/Python%20application/badge.svg)
 
 This repository contains empirically determined approximate expected [Levenshtein distances](https://en.wikipedia.org/wiki/Levenshtein_distance) between random strings over alphabets of different sizes, as well as simple python code to generate them.
 
