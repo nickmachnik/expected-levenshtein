@@ -11,7 +11,20 @@ To use the code, you will need `numpy` and `numba`.
 Simply clone this repo:
 
 ```
-git clone https://github.com/nickmachnik/expected-levenshtein.git
+git clone https://github.com/nickmachnik/expected-levenshtein.git [TARGET DIR]
+```
+
+and then install  via pip
+```
+pip install [TARGET DIR]
+```
+
+## Testing
+
+Test the cloned package:
+```
+cd [TARGET DIR]
+python -m unittest
 ```
 
 ## Geting started
