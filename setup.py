@@ -27,7 +27,7 @@ setup(
     name='expected-levenshtein',
     version=__version__,
     description="""
-        Empirically determined approximate values for
+        Empirical determination of approximate values for
         levenshtein distances between random strings.""",
     # long_description_content_type="text/markdown",
     url='https://github.com/nickmachnik/expected-levenshtein',
