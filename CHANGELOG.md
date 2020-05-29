@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [0.1.2]
+
+### Added
+
+- Functionality for loading precomputed models
+- Models for k = 20, 25 ≤ n ≤ 6000
+
 ## [0.1.1]
 
 ### Added
