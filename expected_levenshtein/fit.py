@@ -5,9 +5,40 @@ generated average levenshtein distances between random strings.
 """
 
 import numpy as np
+import json
 
 codegolf_ref = """https://codegolf.stackexchange.com/questions/197565/
 can-you-calculate-the-average-levenshtein-distance-exactly/197576#197576"""
+
+_precomputed = {20: "./models/k20_n6k_r10k_models.json"}
+
+
+def load_precomputed(k: int):
+    """Load precomputed models that come with the package.
+
+    The models describe polynomials of degree 5 that were fitted
+    to average levenshtein distances generated for a specific
+    alphabet size k. The values of k for which models are
+    available are listed in expected_levenshtein.fit._precomputed.
+
+    Args:
+        k (int): Alphabet size
+
+    Returns:
+        array_like: row indices for which models were computed
+        array_like: coefficients of the fitted polynomials
+        array_like: mean squared deviations between values predicted by the
+                    models and the input data.
+    """
+    k = int(k)
+    assert k in _precomputed, (
+        'The current version of expected-levenshtein',
+        'Does not come with models for k={}.'
+        'k values of available models are listed in',
+        'expected_levenshtein.fit._precomputed').format(k)
+
+    with open(_precomputed[k], "r") as fin:
+        return json.load(fin)
 
 
 def poly(x, coeffs):
