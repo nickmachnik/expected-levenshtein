@@ -36,6 +36,32 @@ python -m unittest
 
 ## Geting started
 
+### Use precomputed models
+
+This package comes with precomputed models for certain alphabet sizes k and string lengths n. Currently the following models are available:
+- k = 20, 25 ≤ n ≤ 6000
+
+> Note: A model for a specific value of n only fits values for m (the length of the second string)
+> such that m ≤ n.
+
+The following example shows how a models can be loaded and used to compute the expected levenshtein distances for k = 20, n = 5000:
+```python
+import expected_levenshtein.fit as efit
+import numpy as np
+
+# load all models for k = 20
+row_indices, coefficients, mean_squared_deviations = efit.load_precomputed(20)
+
+# get the specific model for n = 5000. Here we consider an index row offset.
+coeff_5k = coefficients[5000 - row_indices[0]]
+
+# predict expected distance for n=5000, m=876
+single_distance = efit.poly(876, coeff_5k)
+
+# predict expected distances for n=5000, m ≤ 5000
+range_distances = efit.poly(np.arange(5000), coeff_5k)
+```
+
 ### Computing average levenshtein distances
 
 To compute the approximate expected Levenshtein distances of random strings of lengths 1 ≤ lengths ≤ n, use `random_average_levenshtein` in `sample.py`.
