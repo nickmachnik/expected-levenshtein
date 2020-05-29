@@ -6,11 +6,13 @@ generated average levenshtein distances between random strings.
 
 import numpy as np
 import json
+from importlib_resources import files
 
 codegolf_ref = """https://codegolf.stackexchange.com/questions/197565/
 can-you-calculate-the-average-levenshtein-distance-exactly/197576#197576"""
 
-_precomputed = {20: "./models/k20_n6k_r10k_models.json"}
+_precomputed = {20: files("expected_levenshtein.models").joinpath(
+                    "k20_n6k_r10k_models.json")}
 
 
 def load_precomputed(k: int):
