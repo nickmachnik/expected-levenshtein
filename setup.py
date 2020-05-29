@@ -47,7 +47,7 @@ setup(
         'numpy>=1.8.0',
         'numba'
     ],
-    # scripts=['bin/chess'],
+    include_package_data=True,
     cmdclass={
         'clean': CleanCommand
     },
