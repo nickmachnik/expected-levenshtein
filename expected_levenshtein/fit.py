@@ -27,8 +27,7 @@ def poly(x, coeffs):
 
 
 def _fit_poly(y_data, deg=5):
-    """Fit polynomial of degree `deg` to the given
-    y_data.
+    """Fit polynomial of degree `deg` to the given y_data.
 
     x-values are assumed to be the integers in the interval [1, len(y_data)].
 
