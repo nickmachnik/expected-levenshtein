@@ -23,14 +23,20 @@ class CleanCommand(Command):
             'rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info ./htmlcov')
 
 
+def read_file(filename):
+    with open(os.path.join(os.path.dirname(__file__), filename)) as file:
+        return file.read()
+
+
 setup(
     name='expected-levenshtein',
     version=__version__,
     description="""
         Empirical determination of approximate values for
         levenshtein distances between random strings.""",
-    # long_description_content_type="text/markdown",
-    url='https://github.com/nickmachnik/expected-levenshtein',
+    long_description=read_file('README.md'),
+    long_description_content_type='text/markdown',
+    url='https://github.com/nickmachnik/expected-levenshtein.git',
     setup_requires=[
         'setuptools>=18.0',
     ],
