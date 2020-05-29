@@ -1,7 +1,6 @@
 # expected-levenshtein
 ![Python application](https://github.com/nickmachnik/expected-levenshtein/workflows/Python%20application/badge.svg)
 ![License](https://img.shields.io/github/license/nickmachnik/codon-degeneracy)
-![PyPI version](https://badge.fury.io/py/expected-levenshtein.svg)
 
 This repository contains empirically determined approximate expected [Levenshtein distances](https://en.wikipedia.org/wiki/Levenshtein_distance) between random strings over alphabets of different sizes, as well as simple python code to generate them.
 
@@ -20,6 +19,11 @@ git clone https://github.com/nickmachnik/expected-levenshtein.git [TARGET DIR]
 and then install  via pip
 ```
 pip install [TARGET DIR]
+```
+
+or install directly from PyPI (this won't include unreleased changes as specified in the [changelog](CHANGELOG.md)):
+```
+pip install expected-levenshtein
 ```
 
 ## Testing
