@@ -39,15 +39,16 @@ setup(
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
     url='https://github.com/nickmachnik/expected-levenshtein.git',
+    use_scm_version=True,
     setup_requires=[
         'setuptools>=18.0',
+        'setuptools_scm'
     ],
     packages=find_packages(),
     install_requires=[
         'numpy>=1.8.0',
         'numba'
     ],
-    include_package_data=True,
     cmdclass={
         'clean': CleanCommand
     },
